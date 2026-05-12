@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bryan</title>
+    <title>Inventario</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <h1>Hello este es mi aporte</h1>
+
+    <h1>Inventario de Productos</h1>
+
+    <div class="formulario">
+        <input type="text" id="nombre" placeholder="Producto">
+        <input type="number" id="cantidad" placeholder="Cantidad">
+        <input type="number" id="precio" placeholder="Precio">
+
+        <button onclick="agregarProducto()">
+            Agregar
+        </button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabla"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
