@@ -1,221 +1,218 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentación Épica</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fusion Style</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
-    <style>
+<style>
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        body{
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            overflow:hidden;
-            font-family:'Poppins', sans-serif;
-            background:black;
-        }
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family:'Poppins', sans-serif;
+    background:black;
+}
 
-        /* Fondo animado */
+/* Fondo fusionado */
 
-        .fondo{
-            position:absolute;
-            width:100%;
-            height:100%;
-            background:
-            radial-gradient(circle at top left,#00f7ff,transparent 30%),
-            radial-gradient(circle at bottom right,#ff00ea,transparent 30%),
-            radial-gradient(circle at center,#001aff,transparent 40%);
-            animation:mover 8s infinite alternate;
-            filter:blur(40px);
-        }
+body::before{
+    content:'';
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:
+    radial-gradient(circle,#00f7ff 10%,transparent 20%),
+    radial-gradient(circle,#ff00ea 10%,transparent 20%),
+    radial-gradient(circle,#001aff 10%,transparent 20%);
+    background-size:30% 30%;
+    animation:fusion 12s linear infinite;
+    filter:blur(80px);
+}
 
-        @keyframes mover{
-            0%{
-                transform:scale(1) rotate(0deg);
-            }
-            100%{
-                transform:scale(1.2) rotate(8deg);
-            }
-        }
+@keyframes fusion{
+    0%{
+        transform:rotate(0deg) scale(1);
+    }
+    50%{
+        transform:rotate(180deg) scale(1.2);
+    }
+    100%{
+        transform:rotate(360deg) scale(1);
+    }
+}
 
-        /* Partículas */
+/* Tarjeta */
 
-        .particulas span{
-            position:absolute;
-            width:4px;
-            height:4px;
-            background:white;
-            border-radius:50%;
-            animation:subir 10s linear infinite;
-            opacity:0.6;
-        }
+.card{
+    position:relative;
+    width:450px;
+    padding:45px;
+    border-radius:30px;
+    background:rgba(255,255,255,0.08);
+    border:2px solid rgba(255,255,255,0.2);
+    backdrop-filter:blur(20px);
+    text-align:center;
+    color:white;
+    z-index:10;
+    box-shadow:
+    0 0 30px #00f7ff,
+    0 0 60px #ff00ea;
+    animation:flotar 4s ease-in-out infinite;
+}
 
-        @keyframes subir{
-            0%{
-                transform:translateY(100vh) scale(0);
-            }
-            100%{
-                transform:translateY(-10vh) scale(1);
-            }
-        }
+@keyframes flotar{
+    0%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
+    100%{
+        transform:translateY(0px);
+    }
+}
 
-        /* Tarjeta principal */
+/* Imagen */
 
-        .card{
-            position:relative;
-            width:450px;
-            padding:45px;
-            border-radius:30px;
-            background:rgba(255,255,255,0.08);
-            border:1px solid rgba(255,255,255,0.2);
-            backdrop-filter:blur(20px);
-            box-shadow:
-            0 0 30px rgba(0,255,255,0.4),
-            0 0 60px rgba(255,0,255,0.2);
-            text-align:center;
-            z-index:10;
-            animation:flotar 4s ease-in-out infinite;
-        }
+.foto{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    border:5px solid white;
+    margin-bottom:20px;
+    box-shadow:
+    0 0 20px #00f7ff,
+    0 0 40px #ff00ea;
+    transition:0.5s;
+}
 
-        @keyframes flotar{
-            0%{transform:translateY(0px);}
-            50%{transform:translateY(-15px);}
-            100%{transform:translateY(0px);}
-        }
+.foto:hover{
+    transform:scale(1.1) rotate(8deg);
+}
 
-        .foto{
-            width:150px;
-            height:150px;
-            border-radius:50%;
-            border:5px solid #00f7ff;
-            box-shadow:0 0 25px #00f7ff;
-            margin-bottom:20px;
-            transition:0.5s;
-        }
+/* Texto */
 
-        .foto:hover{
-            transform:scale(1.08) rotate(5deg);
-        }
+h1{
+    font-size:42px;
+    font-family:'Orbitron', sans-serif;
+    margin-bottom:10px;
+    background:linear-gradient(90deg,#00f7ff,#ff00ea,#00f7ff);
+    background-size:300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:textoFusion 5s linear infinite;
+}
 
-        h1{
-            color:white;
-            font-size:42px;
-            font-family:'Orbitron', sans-serif;
-            text-shadow:0 0 15px #00f7ff;
-            margin-bottom:15px;
-        }
+@keyframes textoFusion{
+    0%{
+        background-position:0%;
+    }
+    100%{
+        background-position:300%;
+    }
+}
 
-        .subtitulo{
-            color:#cfcfcf;
-            margin-bottom:25px;
-            font-size:18px;
-        }
+p{
+    font-size:20px;
+    margin:12px 0;
+}
 
-        .info{
-            display:flex;
-            justify-content:space-around;
-            margin-top:25px;
-        }
+/* Caja */
 
-        .box{
-            background:rgba(255,255,255,0.1);
-            padding:18px;
-            width:45%;
-            border-radius:20px;
-            transition:0.4s;
-            border:1px solid rgba(255,255,255,0.1);
-        }
+.info{
+    margin-top:25px;
+    display:flex;
+    justify-content:space-between;
+}
 
-        .box:hover{
-            transform:translateY(-8px) scale(1.05);
-            box-shadow:0 0 20px rgba(255,255,255,0.3);
-        }
+.box{
+    width:48%;
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.1);
+    transition:0.4s;
+}
 
-        .titulo{
-            color:#00f7ff;
-            font-weight:bold;
-            margin-bottom:10px;
-            font-size:20px;
-        }
+.box:hover{
+    transform:scale(1.08);
+    box-shadow:
+    0 0 20px #00f7ff,
+    0 0 30px #ff00ea;
+}
 
-        .texto{
-            color:white;
-            font-size:18px;
-        }
+/* Botón */
 
-        .boton{
-            display:inline-block;
-            margin-top:30px;
-            padding:15px 35px;
-            border-radius:40px;
-            text-decoration:none;
-            color:white;
-            font-weight:bold;
-            background:linear-gradient(45deg,#00f7ff,#ff00ea);
-            box-shadow:0 0 20px rgba(255,0,234,0.6);
-            transition:0.5s;
-        }
+.boton{
+    margin-top:30px;
+    display:inline-block;
+    padding:15px 35px;
+    border-radius:40px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    background:linear-gradient(45deg,#00f7ff,#ff00ea);
+    background-size:300%;
+    animation:btnFusion 4s infinite linear;
+    transition:0.4s;
+}
 
-        .boton:hover{
-            transform:scale(1.1);
-            box-shadow:0 0 35px rgba(0,247,255,1);
-        }
+@keyframes btnFusion{
+    0%{
+        background-position:0%;
+    }
+    100%{
+        background-position:300%;
+    }
+}
 
-    </style>
+.boton:hover{
+    transform:scale(1.1);
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="fondo"></div>
+<div class="card">
 
-    <div class="particulas">
-        <span style="left:10%; animation-delay:0s;"></span>
-        <span style="left:20%; animation-delay:2s;"></span>
-        <span style="left:35%; animation-delay:4s;"></span>
-        <span style="left:50%; animation-delay:1s;"></span>
-        <span style="left:65%; animation-delay:3s;"></span>
-        <span style="left:80%; animation-delay:5s;"></span>
-        <span style="left:90%; animation-delay:6s;"></span>
-    </div>
+    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" class="foto">
 
-    <div class="card">
+    <h1>Julian & Brayan</h1>
 
-        <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" class="foto">
+    <p>Curso: 1113 🎓</p>
 
-        <h1>Julian & Brayan</h1>
+    <p>Python 🐍</p>
 
-        <p class="subtitulo">
-            Future Developers 🚀
-        </p>
+    <div class="info">
 
-        <div class="info">
-
-            <div class="box">
-                <div class="titulo">Curso</div>
-                <div class="texto">1113</div>
-            </div>
-
-            <div class="box">
-                <div class="titulo">Lenguaje</div>
-                <div class="texto">Python 🐍</div>
-            </div>
-
+        <div class="box">
+            🚀 Programación
         </div>
 
-        <a href="#" class="boton">
-            Bienvenidos
-        </a>
+        <div class="box">
+            💻 Developers
+        </div>
 
     </div>
+
+    <a href="#" class="boton">
+        ENTER
+    </a>
+
+</div>
 
 </body>
 </html>
