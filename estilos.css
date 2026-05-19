@@ -1,32 +1,255 @@
-body{
-    font-family: Arial;
-    text-align:center;
-    background:#f5f5f5;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-input, button{
-    padding:10px;
-    margin:5px;
+body{
+    min-height:100vh;
+    font-family:'Poppins', sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:black;
+    overflow-x:hidden;
+    position:relative;
 }
+
+/* Fondo animado */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:-1;
+
+    background:
+    radial-gradient(circle at top left,#00f7ff,transparent 30%),
+    radial-gradient(circle at bottom right,#ff00ea,transparent 30%),
+    radial-gradient(circle at center,#001aff,transparent 40%);
+
+    filter:blur(40px);
+
+    animation:mover 8s infinite alternate;
+}
+
+@keyframes mover{
+
+    0%{
+        transform:scale(1);
+    }
+
+    100%{
+        transform:scale(1.2) rotate(8deg);
+    }
+}
+
+
+
+/* Contenedor */
+
+.container{
+
+    width:90%;
+    max-width:1200px;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:30px;
+}
+
+
+
+/* Tarjetas */
+
+.card{
+
+    background:
+    rgba(255,255,255,0.08);
+
+    border:
+    1px solid
+    rgba(255,255,255,0.2);
+
+    backdrop-filter:
+    blur(20px);
+
+    border-radius:25px;
+
+    padding:30px;
+
+    box-shadow:
+    0 0 25px rgba(0,255,255,.3);
+}
+
+
+
+/* Títulos */
+
+h1{
+
+    position:absolute;
+
+    top:30px;
+
+    color:white;
+
+    font-size:40px;
+
+    text-shadow:
+    0 0 15px #00f7ff;
+}
+
+
+h2{
+
+    color:#00f7ff;
+
+    margin-bottom:20px;
+}
+
+
+
+/* Inputs */
+
+input{
+
+    width:100%;
+
+    margin:10px 0;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+    rgba(255,255,255,.1);
+
+    color:white;
+
+    outline:none;
+}
+
+
+input::placeholder{
+
+    color:#ddd;
+}
+
+
+
+/* Botones */
 
 button{
+
+    margin-top:15px;
+
+    padding:14px 25px;
+
+    border:none;
+
+    border-radius:30px;
+
     cursor:pointer;
-}
 
-table{
-    margin:auto;
-    width:80%;
-    background:white;
-    border-collapse: collapse;
-    margin-top:20px;
-}
-
-th,td{
-    border:1px solid rgb(221, 29, 29);
-    padding:10px;
-}
-
-th{
-    background:black;
     color:white;
+
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        45deg,
+        #00f7ff,
+        #ff00ea
+    );
+
+    transition:.4s;
+}
+
+
+button:hover{
+
+    transform:scale(1.08);
+
+    box-shadow:
+    0 0 20px #00f7ff;
+}
+
+
+
+/* Lista */
+
+ul{
+
+    list-style:none;
+}
+
+
+li{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:15px 0;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    color:white;
+}
+
+
+
+/* Imagen */
+
+.producto-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+
+.producto-img{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:15px;
+
+    object-fit:cover;
+
+    border:2px solid #00f7ff;
+
+    box-shadow:
+    0 0 15px #00f7ff;
+}
+
+
+
+/* Botones internos */
+
+li button{
+
+    margin-left:8px;
+
+    padding:8px 12px;
+
+    font-size:12px;
 }

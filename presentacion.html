@@ -1,223 +1,319 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fusion Style</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
 
-<style>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+    <title>
+        Presentación
+    </title>
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-    font-family:'Poppins', sans-serif;
-    background:black;
-}
 
-/* Fondo fusionado */
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap"
+        rel="stylesheet"
+    >
 
-body::before{
-    content:'';
-    position:absolute;
-    width:200%;
-    height:200%;
-    background:
-    radial-gradient(circle,#00f7ff 10%,transparent 20%),
-    radial-gradient(circle,#ff00ea 10%,transparent 20%),
-    radial-gradient(circle,#001aff 10%,transparent 20%);
-    background-size:30% 30%;
-    animation:fusion 12s linear infinite;
-    filter:blur(80px);
-}
 
-@keyframes fusion{
-    0%{
-        transform:rotate(0deg) scale(1);
-    }
-    50%{
-        transform:rotate(180deg) scale(1.2);
-    }
-    100%{
-        transform:rotate(360deg) scale(1);
-    }
-}
+    <style>
 
-/* Tarjeta */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
 
-.card{
-    position:relative;
-    width:450px;
-    padding:45px;
-    border-radius:30px;
-    background:rgba(255,255,255,0.08);
-    border:2px solid rgba(255,255,255,0.2);
-    backdrop-filter:blur(20px);
-    text-align:center;
-    color:white;
-    z-index:10;
-    box-shadow:
-    0 0 30px #00f7ff,
-    0 0 60px #ff00ea;
-    animation:flotar 4s ease-in-out infinite;
-}
+        body{
 
-@keyframes flotar{
-    0%{
-        transform:translateY(0px);
-    }
-    50%{
-        transform:translateY(-15px);
-    }
-    100%{
-        transform:translateY(0px);
-    }
-}
+            height:100vh;
 
-/* Imagen */
+            display:flex;
 
-.foto{
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    border:5px solid white;
-    margin-bottom:20px;
-    box-shadow:
-    0 0 20px #00f7ff,
-    0 0 40px #ff00ea;
-    transition:0.5s;
-}
+            justify-content:center;
 
-.foto:hover{
-    transform:scale(1.1) rotate(8deg);
-}
+            align-items:center;
 
-/* Texto */
+            overflow:hidden;
 
-h1{
-    font-size:42px;
-    font-family:'Orbitron', sans-serif;
-    margin-bottom:10px;
-    background:linear-gradient(90deg,#00f7ff,#ff00ea,#00f7ff);
-    background-size:300%;
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation:textoFusion 5s linear infinite;
-}
+            font-family:'Poppins', sans-serif;
 
-@keyframes textoFusion{
-    0%{
-        background-position:0%;
-    }
-    100%{
-        background-position:300%;
-    }
-}
+            background:black;
+        }
 
-p{
-    font-size:20px;
-    margin:12px 0;
-}
+        .fondo{
 
-/* Caja */
+            position:absolute;
 
-.info{
-    margin-top:25px;
-    display:flex;
-    justify-content:space-between;
-}
+            width:100%;
 
-.box{
-    width:48%;
-    padding:20px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.1);
-    transition:0.4s;
-}
+            height:100%;
 
-.box:hover{
-    transform:scale(1.08);
-    box-shadow:
-    0 0 20px #00f7ff,
-    0 0 30px #ff00ea;
-}
+            background:
 
-/* Botón */
+            radial-gradient(circle at top left,#00f7ff,transparent 30%),
+            radial-gradient(circle at bottom right,#ff00ea,transparent 30%),
+            radial-gradient(circle at center,#001aff,transparent 40%);
 
-.boton{
-    margin-top:30px;
-    display:inline-block;
-    padding:15px 35px;
-    border-radius:40px;
-    text-decoration:none;
-    color:white;
-    font-weight:bold;
-    background:linear-gradient(45deg,#00f7ff,#ff00ea);
-    background-size:300%;
-    animation:btnFusion 4s infinite linear;
-    transition:0.4s;
-}
+            animation:mover 8s infinite alternate;
 
-@keyframes btnFusion{
-    0%{
-        background-position:0%;
-    }
-    100%{
-        background-position:300%;
-    }
-}
+            filter:blur(40px);
+        }
 
-.boton:hover{
-    transform:scale(1.1);
-}
+        @keyframes mover{
 
-</style>
+            0%{
+                transform:scale(1) rotate(0deg);
+            }
+
+            100%{
+                transform:scale(1.2) rotate(8deg);
+            }
+        }
+
+        .particulas span{
+
+            position:absolute;
+
+            width:4px;
+
+            height:4px;
+
+            background:white;
+
+            border-radius:50%;
+
+            animation:subir 10s linear infinite;
+
+            opacity:.6;
+        }
+
+        @keyframes subir{
+
+            0%{
+                transform:translateY(100vh) scale(0);
+            }
+
+            100%{
+                transform:translateY(-10vh) scale(1);
+            }
+        }
+
+        .card{
+
+            position:relative;
+
+            width:450px;
+
+            padding:45px;
+
+            border-radius:30px;
+
+            background:rgba(255,255,255,.08);
+
+            border:1px solid rgba(255,255,255,.2);
+
+            backdrop-filter:blur(20px);
+
+            box-shadow:
+            0 0 30px rgba(0,255,255,.4),
+            0 0 60px rgba(255,0,255,.2);
+
+            text-align:center;
+
+            z-index:10;
+
+            animation:flotar 4s ease-in-out infinite;
+        }
+
+        @keyframes flotar{
+
+            0%{
+                transform:translateY(0);
+            }
+
+            50%{
+                transform:translateY(-15px);
+            }
+
+            100%{
+                transform:translateY(0);
+            }
+        }
+
+        .foto{
+
+            width:150px;
+
+            height:150px;
+
+            border-radius:50%;
+
+            border:5px solid #00f7ff;
+
+            box-shadow:0 0 25px #00f7ff;
+
+            margin-bottom:20px;
+        }
+
+        h1{
+
+            color:white;
+
+            font-size:42px;
+
+            font-family:'Orbitron', sans-serif;
+
+            text-shadow:0 0 15px #00f7ff;
+
+            margin-bottom:15px;
+        }
+
+        .subtitulo{
+
+            color:#cfcfcf;
+
+            margin-bottom:25px;
+
+            font-size:18px;
+        }
+
+        .info{
+
+            display:flex;
+
+            justify-content:space-around;
+
+            margin-top:25px;
+        }
+
+        .box{
+
+            background:rgba(255,255,255,.1);
+
+            padding:18px;
+
+            width:45%;
+
+            border-radius:20px;
+        }
+
+        .titulo{
+
+            color:#00f7ff;
+
+            font-weight:bold;
+
+            margin-bottom:10px;
+        }
+
+        .texto{
+
+            color:white;
+        }
+
+        .boton{
+
+            display:inline-block;
+
+            margin-top:30px;
+
+            padding:15px 35px;
+
+            border-radius:40px;
+
+            text-decoration:none;
+
+            color:white;
+
+            font-weight:bold;
+
+            background:
+            linear-gradient(45deg,#00f7ff,#ff00ea);
+
+            box-shadow:
+            0 0 20px rgba(255,0,234,.6);
+
+            transition:.5s;
+        }
+
+        .boton:hover{
+
+            transform:scale(1.1);
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<div class="card">
+    <div class="fondo"></div>
 
-    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" class="foto">
+    <div class="particulas">
 
-    <h1>Julian & Brayan</h1>
-
-    <p>Curso: 1113 🎓</p>
-
-    <p>Python </p>
-
-    <div class="info">
-
-        <div class="box">
-            🚀 Programación
-        </div>
-
-        <div class="box">
-            💻 Developers
-        </div>
+        <span style="left:10%"></span>
+        <span style="left:20%"></span>
+        <span style="left:35%"></span>
+        <span style="left:50%"></span>
+        <span style="left:65%"></span>
+        <span style="left:80%"></span>
 
     </div>
 
-    <a href="#" class="boton">
-        ENTER
-    </a>
+    <div class="card">
 
-</div>
+        <img
+            src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png"
+            class="foto"
+        >
 
-</body>
-</html> 
-     
-<h2></h2>  
- 
+        <h1>
+            Julian & Brayan
+        </h1>
 
-htycytrty 
+        <p class="subtitulo">
+            inventario productos JB
+        </p>
+
+        <div class="info">
+
+            <div class="box">
+
+                <div class="titulo">
+                    Curso
+                </div>
+
+                <div class="texto">
+                    1113
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="titulo">
+                    Lenguaje
+                </div>
+
+                <div class="texto">
+                    JavaScript ⚡
+                </div>
+
+            </div>
+
+        </div>
+
+        <a
+            href="index.html"
+            class="boton"
+        >
+            Entrar
+        </a>
+
+    </div>

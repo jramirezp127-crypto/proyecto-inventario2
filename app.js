@@ -1,149 +1,418 @@
-const CLAVE_PRODUCTOS = 'inventario_productos'
+const CLAVE = "productos";
 
-const form = document.querySelector('#producto-form')
-const inputNombre = document.querySelector('#nombre')
-const inputPrecio = document.querySelector('#precio')
-const inputStock = document.querySelector('#stock')
-const lista = document.querySelector('#lista-productos')
-const mensaje = document.querySelector('#mensaje')
-const inputBuscar = document.querySelector('#buscar')
-const tituloForm = document.querySelector('#form-title')
-const btnGuardar = document.querySelector('#btn-guardar')
+const form =
+document.getElementById("producto-form");
 
-let productoEditandoId = null
-let textoBusqueda = ''
+const nombreInput =
+document.getElementById("nombre");
 
-function obtenerProductos() {
-  return JSON.parse(localStorage.getItem(CLAVE_PRODUCTOS)) || []
+const precioInput =
+document.getElementById("precio");
+
+const stockInput =
+document.getElementById("stock");
+
+const imagenInput =
+document.getElementById("imagen");
+
+const lista =
+document.getElementById("lista-productos");
+
+const buscar =
+document.getElementById("buscar");
+
+const totalProductos =
+document.getElementById("total-productos");
+
+const totalDinero =
+document.getElementById("total-dinero");
+
+let editandoId = null;
+
+let filtro = "";
+
+
+/* Obtener productos */
+
+function obtenerProductos(){
+
+    return JSON.parse(
+        localStorage.getItem(CLAVE)
+    ) || [];
 }
 
-function guardarProductos(productos) {
-  localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(productos))
+
+/* Guardar productos */
+
+function guardarProductos(productos){
+
+    localStorage.setItem(
+        CLAVE,
+        JSON.stringify(productos)
+    );
 }
 
-function actualizarModoFormulario() {
-  const enEdicion = productoEditandoId !== null
-  tituloForm.textContent = enEdicion ? 'Editar producto' : 'Agregar producto'
-  btnGuardar.textContent = enEdicion ? 'Actualizar' : 'Guardar'
+
+/* Renderizar */
+
+function render(){
+
+    let productos =
+    obtenerProductos();
+
+    productos =
+    productos.filter(producto =>
+
+        producto.nombre
+        .toLowerCase()
+        .includes(
+            filtro.toLowerCase()
+        )
+    );
+
+
+    /* TOTAL PRODUCTOS */
+
+    let cantidadTotal = 0;
+
+    let dineroTotal = 0;
+
+
+    productos.forEach(producto => {
+
+    cantidadTotal++;
+
+    dineroTotal +=
+    Number(producto.precio)
+    *
+    Number(producto.stock);
+});
+
+
+    totalProductos.textContent =
+    `Total productos: ${cantidadTotal}`;
+
+    totalDinero.textContent =
+    `Total dinero: $${dineroTotal}`;
+
+
+
+    /* LIMPIAR LISTA */
+
+    lista.innerHTML = "";
+
+
+    /* MOSTRAR PRODUCTOS */
+
+    productos.forEach(producto => {
+
+        lista.innerHTML += `
+
+        <li>
+
+            <div class="producto-info">
+
+                ${
+                    producto.imagen
+                    ?
+
+                    `<img
+                        src="${producto.imagen}"
+                        class="producto-img"
+                    >`
+
+                    :
+
+                    ""
+                }
+
+                <div>
+
+                    <strong>
+                        ${producto.nombre}
+                    </strong>
+
+                    <br>
+
+                    Precio:
+                    $${producto.precio}
+
+                    <br>
+
+                    Stock:
+                    ${producto.stock}
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <button
+                    onclick="editar('${producto.id}')"
+                >
+                    Editar
+                </button>
+
+
+                <button
+                    onclick="sumar('${producto.id}')"
+                >
+                    +1
+                </button>
+
+
+                <button
+                    onclick="restar('${producto.id}')"
+                >
+                    -1
+                </button>
+
+
+                <button
+                    onclick="eliminarProducto('${producto.id}')"
+                >
+                    Eliminar
+                </button>
+
+            </div>
+
+        </li>
+        `;
+    });
 }
 
-function salirModoEdicion() {
-  productoEditandoId = null
-  actualizarModoFormulario()
-}
 
-function renderProductos() {
-  const productos = obtenerProductos()
-  const filtro = textoBusqueda.trim().toLowerCase()
 
-  const productosFiltrados = productos.filter((p) => {
-    if (!filtro) return true
-    return p.nombre.toLowerCase().includes(filtro)
-  })
+/* GUARDAR */
 
-  lista.innerHTML = ''
+form.addEventListener(
+    "submit",
 
-  if (productosFiltrados.length === 0) {
-    lista.innerHTML = '<li>No hay productos para mostrar.</li>'
-    return
-  }
+    function(e){
 
-  productosFiltrados.forEach((p) => {
-    const li = document.createElement('li')
-    li.innerHTML = `
-      <div>
-        <strong>${p.nombre}</strong><br>
-        Precio: $${p.precio.toFixed(2)} | Stock: ${p.stock}
-      </div>
-      <div class="actions">
-        <button data-id="${p.id}" data-action="editar">Editar</button>
-        <button data-id="${p.id}" data-action="sumar">+1</button>
-        <button data-id="${p.id}" data-action="restar">-1</button>
-        <button class="btn-delete" data-id="${p.id}" data-action="eliminar">Eliminar</button>
-      </div>
-    `
-    lista.appendChild(li)
-  })
-}
+        e.preventDefault();
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault()
+        const archivo =
+        imagenInput.files[0];
 
-  const nombre = inputNombre.value.trim()
-  const precio = Number(inputPrecio.value)
-  const stock = Number(inputStock.value)
 
-  if (!nombre || !Number.isFinite(precio) || !Number.isFinite(stock) || precio < 0 || stock < 0) {
-    mensaje.textContent = 'Ingresa datos válidos.'
-    return
-  }
+        if(archivo){
 
-  const productos = obtenerProductos()
+            const lector =
+            new FileReader();
 
-  if (productoEditandoId === null) {
-    productos.push({ id: crypto.randomUUID(), nombre, precio, stock })
-    mensaje.textContent = 'Producto guardado.'
-  } else {
-    const index = productos.findIndex((p) => p.id === productoEditandoId)
-    if (index === -1) {
-      mensaje.textContent = 'El producto ya no existe. Intenta de nuevo.'
-      salirModoEdicion()
-      renderProductos()
-      return
+            lector.onload =
+            function(){
+
+                guardarProducto(
+                    lector.result
+                );
+            };
+
+            lector.readAsDataURL(
+                archivo
+            );
+
+        }else{
+
+            guardarProducto(null);
+        }
+    }
+);
+
+
+
+/* CREAR O EDITAR */
+
+function guardarProducto(imagen){
+
+    const productos =
+    obtenerProductos();
+
+
+    const imagenAnterior =
+
+        editandoId
+
+        ?
+
+        productos.find(
+            p => p.id === editandoId
+        )?.imagen
+
+        :
+
+        null;
+
+
+    const producto = {
+
+        id:
+        editandoId
+        ||
+        crypto.randomUUID(),
+
+        nombre:
+        nombreInput.value,
+
+        precio:
+        Number(
+            precioInput.value
+        ),
+
+        stock:
+        Number(
+            stockInput.value
+        ),
+
+        imagen:
+        imagen
+        ||
+        imagenAnterior
+    };
+
+
+    if(editandoId){
+
+        const index =
+
+        productos.findIndex(
+            p => p.id === editandoId
+        );
+
+        productos[index] =
+        producto;
+
+        editandoId = null;
+
+    }else{
+
+        productos.push(producto);
     }
 
-    productos[index] = { ...productos[index], nombre, precio, stock }
-    mensaje.textContent = 'Producto actualizado.'
-    salirModoEdicion()
-  }
 
-  guardarProductos(productos)
-  form.reset()
-  renderProductos()
-})
+    guardarProductos(productos);
 
-lista.addEventListener('click', function (e) {
-  const target = e.target
-  if (!(target instanceof HTMLButtonElement)) return
+    form.reset();
 
-  const id = target.dataset.id
-  const action = target.dataset.action
-  const productos = obtenerProductos()
-  const index = productos.findIndex((p) => p.id === id)
-  if (index === -1) {
-    mensaje.textContent = 'No se encontró el producto.'
-    return
-  }
+    render();
+}
 
-  if (action === 'editar') {
-    const producto = productos[index]
-    inputNombre.value = producto.nombre
-    inputPrecio.value = String(producto.precio)
-    inputStock.value = String(producto.stock)
-    productoEditandoId = producto.id
-    actualizarModoFormulario()
-    mensaje.textContent = `Editando: ${producto.nombre}`
-    return
-  }
 
-  if (action === 'sumar') productos[index].stock += 1
-  if (action === 'restar' && productos[index].stock > 0) productos[index].stock -= 1
-  if (action === 'eliminar') {
-    if (productoEditandoId === id) {
-      form.reset()
-      salirModoEdicion()
+
+/* EDITAR */
+
+function editar(id){
+
+    const producto =
+
+    obtenerProductos()
+    .find(
+        p => p.id === id
+    );
+
+
+    nombreInput.value =
+    producto.nombre;
+
+    precioInput.value =
+    producto.precio;
+
+    stockInput.value =
+    producto.stock;
+
+    editandoId = id;
+}
+
+
+
+/* SUMAR */
+
+function sumar(id){
+
+    const productos =
+    obtenerProductos();
+
+    const producto =
+
+    productos.find(
+        p => p.id === id
+    );
+
+    producto.stock++;
+
+    guardarProductos(productos);
+
+    render();
+}
+
+
+
+/* RESTAR */
+
+function restar(id){
+
+    const productos =
+    obtenerProductos();
+
+    const producto =
+
+    productos.find(
+        p => p.id === id
+    );
+
+    if(producto.stock > 0){
+
+        producto.stock--;
     }
-    productos.splice(index, 1)
-  }
 
-  guardarProductos(productos)
-  renderProductos()
-})
+    guardarProductos(productos);
 
-inputBuscar.addEventListener('input', function () {
-  textoBusqueda = inputBuscar.value
-  renderProductos()
-})
+    render();
+}
 
-actualizarModoFormulario()
-renderProductos()
+
+
+/* ELIMINAR */
+
+function eliminarProducto(id){
+
+    const productos =
+
+    obtenerProductos()
+    .filter(
+        p => p.id !== id
+    );
+
+    guardarProductos(productos);
+
+    render();
+}
+
+
+
+/* BUSCAR */
+
+buscar.addEventListener(
+    "input",
+
+    function(){
+
+        filtro =
+        buscar.value;
+
+        render();
+    }
+);
+
+
+/* INICIAR */
+
+render();
+
+function ponerPrecio(valor){
+
+    precioInput.value = valor;
+}
