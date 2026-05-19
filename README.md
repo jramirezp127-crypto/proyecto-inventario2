@@ -4,7 +4,7 @@
 esto es una prueba
 =======
 # Proyecto Inventario (JavaScript)
-
+testtttttttttttttttttt
 Aplicación web básica para gestionar inventario con JavaScript vanilla y `localStorage`.
 
 ## Funcionalidades
